@@ -13,6 +13,10 @@
 
 //Graphics Libraries
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -22,7 +26,7 @@ import javax.swing.JPanel;
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable {//
+public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -149,4 +153,65 @@ public class BasicGameApp implements Runnable {//
 
 		bufferStrategy.show();
 	}
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        System.out.println(e.getKeyCode());
+        if(e.getKeyCode()==38){
+            body.isNorth=true;
+            System.out.println("goin up");
+            body.dy=-Math.abs(body.dy);
+
+        }
+        if (e.getKeyCode()==40){
+            body.isSouth=true;
+            System.out.println("goin down");
+            body.dy=Math.abs(body.dy);
+        }
+        if(e.getKeyCode()==39){
+            body.isEast=true;
+            System.out.println("goin east");
+            body.dx=Math.abs(body.dx);
+        }
+        if(e.getKeyCode()==37){
+            body.isWest=true;
+            System.out.println("goin west");
+            body.dx=-Math.abs(body.dx);
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

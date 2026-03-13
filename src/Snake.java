@@ -12,8 +12,12 @@ public class Snake {
     public int dy;                    //the speed of the hero in the y direction
     public int width;
     public int height;
-    public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
+    public boolean isAlive;
 
+    public boolean isNorth;
+    public boolean isSouth;
+    public boolean isWest;
+    public boolean isEast;
 
     // METHOD DEFINITION SECTION
 
@@ -36,6 +40,24 @@ public class Snake {
 
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
     public void move() {
+        if(isNorth==true){
+            dy=-2;
+        }
+        if(isSouth==true){
+            dy=2;
+        }
+        if(isSouth==false&&isNorth==false){
+            dy=0;
+        }
+        if(isEast==true){
+            dx=2;
+        }
+        if(isWest==true) {
+            dx=-2;
+        }
+        if(isWest==false&&isEast==false){
+            dx=0;
+        }
         xpos = xpos + dx;
         ypos = ypos + dy;
  
