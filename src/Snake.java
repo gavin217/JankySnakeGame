@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Created by chales on 11/6/2017.
  */
@@ -13,6 +15,7 @@ public class Snake {
     public int width;
     public int height;
     public boolean isAlive;
+    public Rectangle hitbox;
 
     public boolean isNorth;
     public boolean isSouth;
@@ -32,9 +35,10 @@ public class Snake {
         ypos = pYpos;
         dx =1;
         dy =0;
-        width = 60;
-        height = 60;
+        width = 20;
+        height = 20;
         isAlive = true;
+        hitbox=new Rectangle(xpos,ypos,width, height);
  
     } // constructor
 
@@ -60,6 +64,7 @@ public class Snake {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
+        hitbox=new Rectangle(xpos,ypos,width, height);
  
     }
 }

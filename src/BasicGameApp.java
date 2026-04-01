@@ -43,10 +43,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
    
 	public BufferStrategy bufferStrategy;
 	public Image snakePic;
+    public Image foodPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Snake body;
+	public Snake body;
+    public Food Apple;
 
 
    // Main method definition
@@ -67,8 +69,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		snakePic = Toolkit.getDefaultToolkit().getImage("snekBody.png"); //load the picture
-		body = new Snake(10,100);
+		snakePic = Toolkit.getDefaultToolkit().getImage("snekBody.png");//load the picture
+        foodPic= Toolkit.getDefaultToolkit().getImage("Red_Square.png");
+            Apple=new Food(700,500);
+            body = new Snake(500, 100);
 
 
 	}// BasicGameApp()
@@ -87,10 +91,14 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 		while (true) {
 
          moveThings();  //move all the game objects
+            crashing();
          render();  // paint the graphics
-         pause(20); // sleep for 10 ms
+         pause(20);// sleep for 10 ms
 		}
 	}
+    public void crashing(){
+
+    }
 
 
 	public void moveThings()
@@ -120,7 +128,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
    
       // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
       // and trap input events (Mouse and Keyboard events)
-      canvas = new Canvas();  
+      canvas = new Canvas();
+       canvas.addKeyListener(this);
+       canvas.addMouseListener(this);
       canvas.setBounds(0, 0, WIDTH, HEIGHT);
       canvas.setIgnoreRepaint(true);
    
@@ -148,6 +158,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
       //draw the image of the astronaut
 		g.drawImage(snakePic, body.xpos, body.ypos, body.width, body.height, null);
+        g.drawImage(foodPic,Apple.xpos,Apple.ypos,Apple.width, Apple.height, null);
 
 		g.dispose();
 
@@ -156,33 +167,45 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
     @Override
     public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
         if(e.getKeyCode()==38){
             body.isNorth=true;
+            body.isSouth=false;
+            body.isEast=false;
+            body.isWest=false;
             System.out.println("goin up");
             body.dy=-Math.abs(body.dy);
 
         }
         if (e.getKeyCode()==40){
             body.isSouth=true;
+            body.isNorth=false;
+            body.isEast=false;
+            body.isWest=false;
             System.out.println("goin down");
             body.dy=Math.abs(body.dy);
         }
         if(e.getKeyCode()==39){
             body.isEast=true;
+            body.isSouth=false;
+            body.isNorth=false;
+            body.isWest=false;
             System.out.println("goin east");
             body.dx=Math.abs(body.dx);
         }
         if(e.getKeyCode()==37){
             body.isWest=true;
+            body.isSouth=false;
+            body.isEast=false;
+            body.isNorth=false;
             System.out.println("goin west");
             body.dx=-Math.abs(body.dx);
         }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
     }
 
     @Override
