@@ -9,6 +9,7 @@ public class Food {
     public int width;
     public int height;
     public Rectangle hitbox;
+    public boolean isEaten;
 
 
 
@@ -22,6 +23,7 @@ public class Food {
         width = 20;
         height = 20;
         hitbox=new Rectangle(xpos,ypos,width, height);
+        isEaten=false;
 
 
 

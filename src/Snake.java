@@ -45,19 +45,19 @@ public class Snake {
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
     public void move() {
         if(isNorth==true){
-            dy=-2;
+            dy=-20;
         }
         if(isSouth==true){
-            dy=2;
+            dy=20;
         }
         if(isSouth==false&&isNorth==false){
             dy=0;
         }
         if(isEast==true){
-            dx=2;
+            dx=20;
         }
         if(isWest==true) {
-            dx=-2;
+            dx=-20;
         }
         if(isWest==false&&isEast==false){
             dx=0;

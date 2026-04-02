@@ -21,6 +21,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+//lowk fix the spawn so itll be on a grid at some point
 
 
 //*******************************************************************************
@@ -47,7 +48,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	public Snake body;
+	public Snake head;
+    public SnakeBody rope;
     public Food Apple;
 
 
@@ -72,7 +74,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 		snakePic = Toolkit.getDefaultToolkit().getImage("snekBody.png");//load the picture
         foodPic= Toolkit.getDefaultToolkit().getImage("Red_Square.png");
             Apple=new Food(700,500);
-            body = new Snake(500, 100);
+            head = new Snake(500, 100);
+            rope=new SnakeBody(480,100);
 
 
 	}// BasicGameApp()
@@ -97,16 +100,28 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 		}
 	}
     public void crashing(){
-
+if(head.hitbox.intersects(Apple.hitbox)){
+    Apple.isEaten=true;
+}
     }
 
 
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		body.move();
+		head.move();
+        pause(50);
+        Teleporting();
 
 	}
+    public void Teleporting(){
+        if(rope.ypos== head.ypos&&rope.xpos+19>head.xpos){
+            rope.xpos=rope.xpos-20;
+        }
+        if(rope.ypos== head.ypos&&rope.xpos+21<head.xpos){
+            rope.xpos=rope.xpos+20;
+        }
+    }
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
    public void pause(int time ){
@@ -157,9 +172,13 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(snakePic, body.xpos, body.ypos, body.width, body.height, null);
-        g.drawImage(foodPic,Apple.xpos,Apple.ypos,Apple.width, Apple.height, null);
-
+		g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
+        g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
+        g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
+        if (Apple.isEaten == false) {
+            g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
+            g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
+        }
 		g.dispose();
 
 		bufferStrategy.show();
@@ -174,37 +193,37 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
         if(e.getKeyCode()==38){
-            body.isNorth=true;
-            body.isSouth=false;
-            body.isEast=false;
-            body.isWest=false;
+            head.isNorth=true;
+            head.isSouth=false;
+            head.isEast=false;
+            head.isWest=false;
             System.out.println("goin up");
-            body.dy=-Math.abs(body.dy);
+            head.dy=-Math.abs(head.dy);
 
         }
         if (e.getKeyCode()==40){
-            body.isSouth=true;
-            body.isNorth=false;
-            body.isEast=false;
-            body.isWest=false;
+            head.isSouth=true;
+            head.isNorth=false;
+            head.isEast=false;
+            head.isWest=false;
             System.out.println("goin down");
-            body.dy=Math.abs(body.dy);
+            head.dy=Math.abs(head.dy);
         }
         if(e.getKeyCode()==39){
-            body.isEast=true;
-            body.isSouth=false;
-            body.isNorth=false;
-            body.isWest=false;
+            head.isEast=true;
+            head.isSouth=false;
+            head.isNorth=false;
+            head.isWest=false;
             System.out.println("goin east");
-            body.dx=Math.abs(body.dx);
+            head.dx=Math.abs(head.dx);
         }
         if(e.getKeyCode()==37){
-            body.isWest=true;
-            body.isSouth=false;
-            body.isEast=false;
-            body.isNorth=false;
+            head.isWest=true;
+            head.isSouth=false;
+            head.isEast=false;
+            head.isNorth=false;
             System.out.println("goin west");
-            body.dx=-Math.abs(body.dx);
+            head.dx=-Math.abs(head.dx);
         }
     }
 
