@@ -115,12 +115,26 @@ if(head.hitbox.intersects(Apple.hitbox)){
 
 	}
     public void Teleporting(){
-        if(rope.ypos== head.ypos&&rope.xpos+19>head.xpos){
+        if(rope.xpos+21>head.xpos){
             rope.xpos=rope.xpos-20;
         }
-        if(rope.ypos== head.ypos&&rope.xpos+21<head.xpos){
+        if(rope.xpos+21<head.xpos){
             rope.xpos=rope.xpos+20;
         }
+        if(rope.ypos+21> head.ypos){
+            rope.ypos= rope.ypos-20;
+        }
+        if(rope.ypos-20<head.ypos){
+            rope.ypos=rope.ypos+20;
+        }
+        if(rope.xpos== head.xpos&&rope.ypos< head.ypos){
+            rope.ypos= rope.ypos+20;
+            rope.xpos= rope.xpos+20;
+        }
+        if(rope.xpos<head.xpos&&rope.ypos<head.ypos){
+            rope.xpos= rope.xpos+20;
+        }
+
     }
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
