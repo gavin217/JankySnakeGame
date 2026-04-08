@@ -205,7 +205,7 @@ if(head.hitbox.intersects(Apple.hitbox)){
 		g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
         g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
         g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
-        if (Apple.isEaten == false) {
+        if (Apple.isEaten == false) {//make reappear when eaten
             g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
             g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
         }
