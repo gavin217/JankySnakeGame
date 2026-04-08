@@ -114,8 +114,8 @@ if(head.hitbox.intersects(Apple.hitbox)){
         Teleporting();
 
 	}
-    public void Teleporting(){
-        if(rope.xpos+21>head.xpos){
+    public void Teleporting(){//make work for up left, down right,left down
+        if(rope.xpos+20>head.xpos){
             rope.xpos=rope.xpos-20;
         }
         if(rope.xpos+21<head.xpos){
@@ -127,6 +127,12 @@ if(head.hitbox.intersects(Apple.hitbox)){
         if(rope.ypos-20<head.ypos){
             rope.ypos=rope.ypos+20;
         }
+        if(rope.xpos<head.xpos&&rope.ypos>head.ypos&&head.dy==0){
+            rope.ypos= rope.ypos-20;
+        }
+        if(rope.xpos>head.xpos&&rope.ypos>head.ypos&&head.dy==0){
+            rope.ypos= rope.ypos-20;
+        }
         if(rope.xpos== head.xpos&&rope.ypos< head.ypos){
             rope.ypos= rope.ypos+20;
             rope.xpos= rope.xpos+20;
@@ -134,6 +140,16 @@ if(head.hitbox.intersects(Apple.hitbox)){
         if(rope.xpos<head.xpos&&rope.ypos<head.ypos){
             rope.xpos= rope.xpos+20;
         }
+        if(rope.xpos>head.xpos&&rope.ypos>head.ypos){
+            rope.xpos= rope.xpos-20;
+        }
+        if(rope.xpos<head.xpos&&rope.ypos>head.ypos){
+            rope.xpos= rope.xpos+20;
+        }
+
+
+
+
 
     }
 	
