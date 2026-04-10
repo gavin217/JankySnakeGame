@@ -41,12 +41,35 @@ public class SnakeBody {
             isAlive = true;
             hitbox=new Rectangle(xpos,ypos,width, height);
 
+
         } // constructor
 
         //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
-        public void teleport() {//this wont do anything bc i will just be teleporting this to the preceding position with slightly less wait
+        public void move() {
+            if(isNorth==true){
+                dy=-20;
+            }
+            if(isSouth==true){
+                dy=20;
+            }
+            if(isSouth==false&&isNorth==false){
+                dy=0;
+            }
+            if(isEast==true){
+                dx=20;
+            }
+            if(isWest==true) {
+                dx=-20;
+            }
+            if(isWest==false&&isEast==false){
+                dx=0;
+            }
+            xpos = xpos + dx;
+            ypos = ypos + dy;
 
-    hitbox=new Rectangle(xpos,ypos,width, height);
+
+
+            hitbox=new Rectangle(xpos,ypos,width, height);
 
         }
     }
