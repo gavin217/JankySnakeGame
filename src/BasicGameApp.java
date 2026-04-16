@@ -112,8 +112,8 @@ if(head.hitbox.intersects(Apple.hitbox)){
 		head.move();
         rope.move();
         pause(50);
-        //Teleporting();
-       // betterMove();
+       // Teleporting();
+       betterMove();
 
 	}
     public void Teleporting(){//make work for up left, down right,left down
@@ -160,10 +160,7 @@ if(head.hitbox.intersects(Apple.hitbox)){
 
 
     }
-    public void betterMove(){
-        rope.dx= head.dx;
-        rope.dy= head.dy;
-    }
+
 
     //Pauses or sleeps the computer for the amount specified in milliseconds
    public void pause(int time ){
@@ -297,5 +294,23 @@ if(head.hitbox.intersects(Apple.hitbox)){
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+    public void betterMove(){
+       if (head.dx==20){
+           rope.xpos=head.xpos-20;
+           rope.ypos=head.ypos;
+       }
+       if (head.dx==-20){
+           rope.xpos=head.xpos+20;
+           rope.ypos=head.ypos;
+       }
+       if (head.dy==20){
+           rope.ypos=head.ypos-20;
+           rope.xpos=head.xpos;
+       }
+       if(head.dy==-20){
+           rope.ypos=head.ypos+20;
+           rope.xpos=head.xpos;
+       }
     }
 }
