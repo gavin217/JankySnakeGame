@@ -50,7 +50,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
    //These are things that are made up of more than one variable type
 	public Snake head;
     public SnakeBody rope;
+    public SnakeBody rope2;
+
     public Food Apple;
+    public Food Apple2;
 
 
    // Main method definition
@@ -74,8 +77,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 		snakePic = Toolkit.getDefaultToolkit().getImage("snekBody.png");//load the picture
         foodPic= Toolkit.getDefaultToolkit().getImage("Red_Square.png");
             Apple=new Food(700,500);
+            Apple2=new Food(200,600);
             head = new Snake(500, 100);
             rope=new SnakeBody(480,100);
+            rope2=new SnakeBody(480,100);
 
 
 	}// BasicGameApp()
@@ -103,6 +108,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 if(head.hitbox.intersects(Apple.hitbox)){
     Apple.isEaten=true;
 }
+        if(head.hitbox.intersects(Apple2.hitbox)){
+            Apple2.isEaten=true;
+        }
     }
 
 
@@ -110,13 +118,15 @@ if(head.hitbox.intersects(Apple.hitbox)){
 	{
       //calls the move( ) code in the objects
 		head.move();
-        rope.move();
+        //rope.move();
         pause(50);
        // Teleporting();
        betterMove();
+       pause(50);
+       betterMove2();
 
 	}
-    public void Teleporting(){//make work for up left, down right,left down
+    public void Teleporting(){//so this doesnt work
         if(rope.xpos+20>head.xpos){
             rope.xpos=rope.xpos-20;
         }
@@ -159,6 +169,48 @@ if(head.hitbox.intersects(Apple.hitbox)){
 
 
 
+    }
+    public void betterMove2(){
+        if (head.dx==20){
+            rope2.xpos=rope.xpos-20;
+            rope2.ypos=rope.ypos;
+        }
+        if (head.dx==-20){
+            rope2.xpos=rope.xpos+20;
+            rope2.ypos=rope.ypos;
+        }
+        if (head.dy==20){
+            rope2.ypos=rope.ypos-20;
+            rope2.xpos=rope.xpos;
+        }
+        if(head.dy==-20){
+            rope2.ypos=rope.ypos+20;
+            rope2.xpos=rope.xpos;
+        }
+    }
+    public void betterMove(){
+        if (head.dx==20){
+            rope.xpos=head.xpos-20;
+            rope2.xpos=rope.xpos-20;
+            rope.ypos=head.ypos;
+            rope2.ypos=rope.ypos;
+        }
+        if (head.dx==-20){
+            rope.xpos=head.xpos+20;
+            rope2.xpos=rope.xpos+20;
+            rope.ypos=head.ypos;
+            rope2.ypos=rope.ypos;
+        }
+        if (head.dy==20){
+            rope.ypos=head.ypos-20;
+            rope2.ypos=rope.ypos-20;
+            rope.xpos=head.xpos;
+            rope2.xpos=rope.xpos;
+        }
+        if(head.dy==-20){
+            rope.ypos=head.ypos+20;
+            rope.xpos=head.xpos;
+        }
     }
 
 
@@ -211,13 +263,21 @@ if(head.hitbox.intersects(Apple.hitbox)){
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
-        g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
         g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
+		g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
+        if(Apple.isEaten==true) {
+            g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
+        }
         if (Apple.isEaten == false) {//make reappear when eaten
             g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
             g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
         }
+        if(Apple.isEaten==true&&Apple2.isEaten==false){
+            g.drawImage(foodPic, Apple2.xpos, Apple2.ypos, Apple2.width, Apple2.height, null);
+            g.drawRect(Apple2.hitbox.x, Apple2.hitbox.y, Apple2.width, Apple2.height);
+        }
+
+
 		g.dispose();
 
 		bufferStrategy.show();
@@ -295,22 +355,5 @@ if(head.hitbox.intersects(Apple.hitbox)){
     public void mouseExited(MouseEvent e) {
 
     }
-    public void betterMove(){
-       if (head.dx==20){
-           rope.xpos=head.xpos-20;
-           rope.ypos=head.ypos;
-       }
-       if (head.dx==-20){
-           rope.xpos=head.xpos+20;
-           rope.ypos=head.ypos;
-       }
-       if (head.dy==20){
-           rope.ypos=head.ypos-20;
-           rope.xpos=head.xpos;
-       }
-       if(head.dy==-20){
-           rope.ypos=head.ypos+20;
-           rope.xpos=head.xpos;
-       }
-    }
+
 }
