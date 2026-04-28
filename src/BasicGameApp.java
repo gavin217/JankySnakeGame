@@ -120,72 +120,68 @@ if(head.hitbox.intersects(Apple.hitbox)){
 		head.move();
         //rope.move();
         pause(50);
-       // Teleporting();
        betterMove();
        pause(50);
        betterMove2();
 
 	}
-    public void Teleporting(){//so this doesnt work
-        if(rope.xpos+20>head.xpos){
-            rope.xpos=rope.xpos-20;
-        }
-        if(rope.xpos+20<head.xpos){
-            rope.xpos=rope.xpos+20;
-        }
-        if(rope.ypos+21> head.ypos){
-            rope.ypos= rope.ypos-20;
-        }
-        if(rope.ypos-20<head.ypos){
-            rope.ypos=rope.ypos+20;
-        }
-        if(rope.xpos>head.xpos&&rope.ypos>head.ypos&&head.dy==0){
-            rope.ypos= rope.ypos-20;
-        }
-        if(rope.xpos<head.xpos&&rope.ypos>head.ypos&&head.dy==0){
-            rope.ypos= rope.ypos-20;
-        }
-
-        if(rope.xpos>head.xpos&&rope.ypos>head.ypos&&head.dy==0){
-            rope.ypos= rope.ypos-20;
-        }
-        if(rope.xpos== head.xpos&&rope.ypos< head.ypos){
-            rope.ypos= rope.ypos+20;
-            rope.xpos= rope.xpos+20;
-        }
-        if(rope.xpos<head.xpos&&rope.ypos<head.ypos&&head.dx==0){
-            rope.xpos= rope.xpos+20;
-        }
-        if(rope.xpos>head.xpos&&rope.ypos>head.ypos){
-           rope.xpos= rope.xpos-20;
-        }
-        if(rope.xpos<head.xpos&&rope.ypos>head.ypos){
-            rope.xpos= rope.xpos+20;
-        }
 
 
 
 
-
-
-
-    }
-    public void betterMove2(){
-        if (head.dx==20){
+    public void betterMove2(){//explain this
+        if (head.dx==20&&rope2.xpos+30<head.xpos){
             rope2.xpos=rope.xpos-20;
             rope2.ypos=rope.ypos;
         }
-        if (head.dx==-20){
+        if(head.dx==20&&rope2.xpos+30>head.xpos){
+            rope2.xpos=rope.xpos;
+            if(rope2.ypos<rope.ypos){
+                rope2.ypos=rope.ypos-20;
+            }
+            if(rope2.ypos>rope.ypos){
+                rope2.ypos=rope.ypos+20;
+            }
+        }
+        if (head.dx==-20&&rope2.xpos-30>head.xpos){
             rope2.xpos=rope.xpos+20;
             rope2.ypos=rope.ypos;
         }
-        if (head.dy==20){
+        if(head.dx==-20&&rope2.xpos-30<head.xpos){
+            rope2.xpos=rope.xpos;
+            if(rope2.ypos<rope.ypos){
+                rope2.ypos=rope.ypos-20;
+            }
+            if(rope2.ypos>rope.ypos){
+                rope2.ypos=rope.ypos+20;
+            }
+        }
+        if (head.dy==20&&rope2.ypos+30<head.ypos){
             rope2.ypos=rope.ypos-20;
             rope2.xpos=rope.xpos;
         }
-        if(head.dy==-20){
+        if (head.dy==20&&rope2.ypos+30>head.ypos){
+            rope2.ypos=rope.ypos;
+            if(rope2.xpos<rope.xpos) {
+                rope2.xpos = rope.xpos - 20;
+            }
+            if(rope2.xpos>rope.xpos){
+                rope2.xpos=rope.xpos+20;
+            }
+        }
+
+        if(head.dy==-20&&rope2.ypos-30>head.ypos){
             rope2.ypos=rope.ypos+20;
             rope2.xpos=rope.xpos;
+        }
+        if (head.dy==-20&&rope2.ypos-30<head.ypos){
+            rope2.ypos=rope.ypos;
+            if(rope2.xpos<rope.xpos) {
+                rope2.xpos = rope.xpos - 20;
+            }
+            if(rope2.xpos>rope.xpos){
+                rope2.xpos=rope.xpos+20;
+            }
         }
     }
     public void betterMove(){
