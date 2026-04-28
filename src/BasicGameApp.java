@@ -191,21 +191,15 @@ if(head.hitbox.intersects(Apple.hitbox)){
     public void betterMove(){
         if (head.dx==20){
             rope.xpos=head.xpos-20;
-            rope2.xpos=rope.xpos-20;
             rope.ypos=head.ypos;
-            rope2.ypos=rope.ypos;
         }
         if (head.dx==-20){
             rope.xpos=head.xpos+20;
-            rope2.xpos=rope.xpos+20;
             rope.ypos=head.ypos;
-            rope2.ypos=rope.ypos;
         }
         if (head.dy==20){
             rope.ypos=head.ypos-20;
-            rope2.ypos=rope.ypos-20;
             rope.xpos=head.xpos;
-            rope2.xpos=rope.xpos;
         }
         if(head.dy==-20){
             rope.ypos=head.ypos+20;
@@ -275,6 +269,9 @@ if(head.hitbox.intersects(Apple.hitbox)){
         if(Apple.isEaten==true&&Apple2.isEaten==false){
             g.drawImage(foodPic, Apple2.xpos, Apple2.ypos, Apple2.width, Apple2.height, null);
             g.drawRect(Apple2.hitbox.x, Apple2.hitbox.y, Apple2.width, Apple2.height);
+        }
+        if(Apple2.isEaten==true){
+            g.drawImage(snakePic,rope2.xpos,rope2.ypos,rope2.width,rope2.height,null);
         }
 
 
