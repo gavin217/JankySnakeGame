@@ -163,14 +163,14 @@ public void moveFood(){
 
 
 
-    public void betterMove2(){//explain this
-        if (head.dx==20&&rope2.xpos+30<head.xpos){
+    public void betterMove2(){//first comments apple to every other set of if statements
+        if (head.dx==20&&rope2.xpos+30<head.xpos){//makes the snake travel in a straight line
             rope2.xpos=rope.xpos-20;
             rope2.ypos=rope.ypos;
         }
-        if(head.dx==20&&rope2.xpos+30>head.xpos){
+        if(head.dx==20&&rope2.xpos+30>head.xpos){//if the snake is supposed ot be in an l shape, this does that
             rope2.xpos=rope.xpos;
-            if(rope2.ypos<rope.ypos){
+            if(rope2.ypos<rope.ypos){//these nested loops are for the specific direction of the l shape
                 rope2.ypos=rope.ypos-20;
             }
             if(rope2.ypos>rope.ypos){
@@ -219,19 +219,19 @@ public void moveFood(){
         }
     }
     public void betterMove(){
-        if (head.dx==20){
+        if (head.dx==20){//makes first body follow head left
             rope.xpos=head.xpos-20;
             rope.ypos=head.ypos;
         }
-        if (head.dx==-20){
+        if (head.dx==-20){//make body follow head right
             rope.xpos=head.xpos+20;
             rope.ypos=head.ypos;
         }
-        if (head.dy==20){
+        if (head.dy==20){//make body follow head down
             rope.ypos=head.ypos-20;
             rope.xpos=head.xpos;
         }
-        if(head.dy==-20){
+        if(head.dy==-20){//make body follow head up
             rope.ypos=head.ypos+20;
             rope.xpos=head.xpos;
         }
@@ -287,25 +287,25 @@ public void moveFood(){
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-        if(startgame==true) {
-            for(int o=1; o< SeveralApples.length;o=o+1){
-                if(SeveralApples[1].isEaten==false){
+        if(startgame==true) {//only makes images if game is started
+            for(int o=1; o< SeveralApples.length;o=o+1){//draws the other apples
+                if(SeveralApples[1].isEaten==false){//removes eaten apples
                     g.drawImage(foodPic, SeveralApples[1].xpos, SeveralApples[1].ypos, SeveralApples[1].width, SeveralApples[1].height, null);
                 }
-                if(SeveralApples[o].isEaten==false&&SeveralApples[o-1].isEaten==true) {
+                if(SeveralApples[o].isEaten==false&&SeveralApples[o-1].isEaten==true) {//removes other eaten apples
                     g.drawImage(foodPic, SeveralApples[o].xpos, SeveralApples[o].ypos, SeveralApples[o].width, SeveralApples[o].height, null);
                 }
             }
             g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
             g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
-            if (Apple.isEaten == true) {
+            if (Apple.isEaten == true) {//adds a body when a specific apple is eaten
                 g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
             }
             if (Apple.isEaten == false) {//make reappear when eaten
                 g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
                 g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
             }
-            if (Apple.isEaten == true && Apple2.isEaten == false) {
+            if (Apple.isEaten == true && Apple2.isEaten == false) {//same as above but only adds the second apple after first is eaten and removes when secodn is not
                 g.drawImage(foodPic, Apple2.xpos, Apple2.ypos, Apple2.width, Apple2.height, null);
                 g.drawRect(Apple2.hitbox.x, Apple2.hitbox.y, Apple2.width, Apple2.height);
             }
@@ -317,7 +317,7 @@ public void moveFood(){
                 g.drawImage(snakePic, rope2.xpos, rope2.ypos, rope2.width, rope2.height, null);
             }
         }
-        if(startgame==false) {
+        if(startgame==false) {//shows start button
             g.setColor(Color.GREEN);
             g.fillRect(100, 100, 10, 10);
         }
@@ -334,7 +334,7 @@ public void moveFood(){
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {//all this stuff gets the arrow key pressed so game actually functions
         System.out.println(e.getKeyCode());
         if(e.getKeyCode()==38){
             head.isNorth=true;
@@ -382,14 +382,43 @@ public void moveFood(){
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {//nakes a start screen
         System.out.println(e.getPoint());
             Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1, 1);
             Rectangle startHitbox = new Rectangle(100, 100, 100, 100);
+        if(head.xpos>179){//ends the game if u hit a wall
+            head.dx=0;
+            head.dy=0;
+            startgame=false;
+            head.xpos=100;
+            head.ypos=100;
+        }
+        if(head.xpos<-0){
+            head.dx=0;
+            head.dy=0;
+            startgame=false;
+            head.ypos=100;
+            head.xpos=100;
+        }
+        if(head.ypos>179){
+            head.dy=0;
+            head.dx=0;
+            startgame=false;
+            head.xpos=100;
+            head.ypos=100;
+        }
+        if(head.ypos<0){
+            head.dy=0;
+            head.dx=0;
+            startgame=false;
+            head.xpos=100;
+            head.ypos=100;
+        }
 
             if (startHitbox.intersects(pointHitbox)) {
                 startgame = true;
             }
+
 
     }
 
