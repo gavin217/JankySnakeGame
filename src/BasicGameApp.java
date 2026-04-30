@@ -45,7 +45,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 	public BufferStrategy bufferStrategy;
 	public Image snakePic;
     public Image foodPic;
-    public Image orangePic;
+    public Image orangePic;//this is the thrid character it just take a second to spawn
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -58,6 +58,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
     public Food[] SeveralApples;
     public WinningFood Orange;
     public boolean startgame;
+    public boolean endgame;
 
 
    // Main method definition
@@ -84,7 +85,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
         Orange=new WinningFood(50,50);
             Apple=new Food(150,150);
             Apple2=new Food(100,100);
-            head = new Snake(10, 10);
+            head = new Snake(20, 20);
             rope=new SnakeBody(480,100);
             rope2=new SnakeBody(480,100);
             SeveralApples=new Food[5];
@@ -150,12 +151,44 @@ public void moveFood(){
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-        if(startgame==true) {
+        if(startgame==true) {//only runs if game is started
             head.move();
             pause(50);
             betterMove();
             pause(50);
             betterMove2();
+        }
+        if(head.xpos>179){//ends the game if u hit a wall same for other 3 if statemtns below
+            head.dx=0;
+            head.dy=0;
+            endgame=true;
+            startgame=false;
+            head.xpos=100;
+            head.ypos=100;
+        }
+        if(head.xpos<-0){
+            head.dx=0;
+            head.dy=0;
+            startgame=false;
+            endgame=true;
+            head.ypos=100;
+            head.xpos=100;
+        }
+        if(head.ypos>181){
+            head.dy=0;
+            head.dx=0;
+            startgame=false;
+            endgame=true;
+            head.xpos=100;
+            head.ypos=100;
+        }
+        if(head.ypos<0){
+            head.dy=0;
+            head.dx=0;
+            startgame=false;
+            endgame=true;
+            head.xpos=100;
+            head.ypos=100;
         }
 
 	}
@@ -163,14 +196,14 @@ public void moveFood(){
 
 
 
-    public void betterMove2(){//first comments apple to every other set of if statements
+    public void betterMove2(){//first comments apply to every other set of if statements
         if (head.dx==20&&rope2.xpos+30<head.xpos){//makes the snake travel in a straight line
             rope2.xpos=rope.xpos-20;
             rope2.ypos=rope.ypos;
         }
-        if(head.dx==20&&rope2.xpos+30>head.xpos){//if the snake is supposed ot be in an l shape, this does that
+        if(head.dx==20&&rope2.xpos+30>head.xpos){//if the snake is supposed to be in an l shape, nested loops do that
             rope2.xpos=rope.xpos;
-            if(rope2.ypos<rope.ypos){//these nested loops are for the specific direction of the l shape
+            if(rope2.ypos<rope.ypos){//these inside are for the specific direction of the l shape
                 rope2.ypos=rope.ypos-20;
             }
             if(rope2.ypos>rope.ypos){
@@ -285,8 +318,26 @@ public void moveFood(){
 	private void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
+        if (endgame == true) {//deals with endgame and stops everything
+            Apple.dx=0;
+            Apple.dy=0;
+            Apple2.dx=0;
+            Apple2.dy=0;
+            Orange.dx=0;
+            Orange.dy=0;
+            for(int x=0;x<SeveralApples.length;x++){
+                SeveralApples[x].dx=0;
+                SeveralApples[x].dy=0;
+            }
+            for(int x=255;x>=100;x=x-1){//makes a greyish death screen
+                g.setColor(new Color(x,x,x));
+                g.fillRect(0,0,200,200);
+
+            }
 
       //draw the image of the astronaut
+
+        }
         if(startgame==true) {//only makes images if game is started
             for(int o=1; o< SeveralApples.length;o=o+1){//draws the other apples
                 if(SeveralApples[1].isEaten==false){//removes eaten apples
@@ -382,38 +433,11 @@ public void moveFood(){
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {//nakes a start screen
+    public void mousePressed(MouseEvent e) {//makes a start screen
         System.out.println(e.getPoint());
             Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1, 1);
             Rectangle startHitbox = new Rectangle(100, 100, 100, 100);
-        if(head.xpos>179){//ends the game if u hit a wall
-            head.dx=0;
-            head.dy=0;
-            startgame=false;
-            head.xpos=100;
-            head.ypos=100;
-        }
-        if(head.xpos<-0){
-            head.dx=0;
-            head.dy=0;
-            startgame=false;
-            head.ypos=100;
-            head.xpos=100;
-        }
-        if(head.ypos>179){
-            head.dy=0;
-            head.dx=0;
-            startgame=false;
-            head.xpos=100;
-            head.ypos=100;
-        }
-        if(head.ypos<0){
-            head.dy=0;
-            head.dx=0;
-            startgame=false;
-            head.xpos=100;
-            head.ypos=100;
-        }
+
 
             if (startHitbox.intersects(pointHitbox)) {
                 startgame = true;
