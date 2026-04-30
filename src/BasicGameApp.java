@@ -332,6 +332,7 @@ public void moveFood(){
             for(int x=255;x>=100;x=x-1){//makes a greyish death screen
                 g.setColor(new Color(x,x,x));
                 g.fillRect(0,0,200,200);
+                pause(3);
 
             }
 
