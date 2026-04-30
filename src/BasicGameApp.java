@@ -55,6 +55,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
     public Food Apple;
     public Food Apple2;
+    public Food[] SeveralApples;
     public WinningFood Orange;
     public boolean startgame;
 
@@ -86,6 +87,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
             head = new Snake(10, 10);
             rope=new SnakeBody(480,100);
             rope2=new SnakeBody(480,100);
+            SeveralApples=new Food[5];
+            for(int x=0; x<SeveralApples.length;x=x+1){//makes other apples spawn in random spots
+                SeveralApples[x]=new Food((int)(Math.random()*170)+1,(int)(Math.random()*170)+1);
+                SeveralApples[x].dx=(int)(Math.random()*10)+1;
+                SeveralApples[x].dy=(int)(Math.random()*10)+1;
+            }
 
 
 	}// BasicGameApp()
@@ -114,7 +121,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
 	}
     public void crashing(){
-if(head.hitbox.intersects(Apple.hitbox)){//apple dissapears when eaten
+if(head.hitbox.intersects(Apple.hitbox)){//apple disappears when eaten
     Apple.isEaten=true;
 }
         if(head.hitbox.intersects(Apple2.hitbox)&&Apple.isEaten==true){//makes the second apple eaten only if first apple is eaten
@@ -123,6 +130,11 @@ if(head.hitbox.intersects(Apple.hitbox)){//apple dissapears when eaten
         if(head.hitbox.intersects(Orange.hitbox)&& Apple2.isEaten==true){//makes oranges eaten if apples are eaten
             Orange.isEaten=true;
         }
+        for(int x=0;x<SeveralApples.length;x=x+1){
+            if (head.hitbox.intersects(SeveralApples[x].hitbox)){
+                SeveralApples[x].isEaten=true;
+            }
+        }
     }
 
 public void moveFood(){
@@ -130,6 +142,9 @@ public void moveFood(){
             Apple.move();
             Apple2.move();
             Orange.move();
+            for(int i=0;i< SeveralApples.length;i=i+1){
+                SeveralApples[i].move();
+            }
         }
 }
 	public void moveThings()
@@ -273,6 +288,14 @@ public void moveFood(){
 
       //draw the image of the astronaut
         if(startgame==true) {
+            for(int o=1; o< SeveralApples.length;o=o+1){
+                if(SeveralApples[1].isEaten==false){
+                    g.drawImage(foodPic, SeveralApples[1].xpos, SeveralApples[1].ypos, SeveralApples[1].width, SeveralApples[1].height, null);
+                }
+                if(SeveralApples[o].isEaten==false&&SeveralApples[o-1].isEaten==true) {
+                    g.drawImage(foodPic, SeveralApples[o].xpos, SeveralApples[o].ypos, SeveralApples[o].width, SeveralApples[o].height, null);
+                }
+            }
             g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
             g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
             if (Apple.isEaten == true) {
