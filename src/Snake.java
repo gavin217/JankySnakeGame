@@ -62,6 +62,22 @@ public class Snake {
         if(isWest==false&&isEast==false){
             dx=0;
         }
+        if(xpos>179){
+            dx=0;
+            dy=0;
+        }
+        if(xpos<-0){
+            dx=0;
+            dy=0;
+        }
+        if(ypos>179){
+            dy=0;
+            dx=0;
+        }
+        if(ypos<0){
+            dy=0;
+            dx=0;
+        }
         xpos = xpos + dx;
         ypos = ypos + dy;
         hitbox=new Rectangle(xpos,ypos,width, height);

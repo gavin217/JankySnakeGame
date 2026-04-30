@@ -34,8 +34,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
    //You can set their initial values too
    
    //Sets the width and height of the program window
-	final int WIDTH = 1000;
-	final int HEIGHT = 700;
+	final int WIDTH = 200;
+	final int HEIGHT = 200;
 
    //Declare the variables needed for the graphics
 	public JFrame frame;
@@ -45,6 +45,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 	public BufferStrategy bufferStrategy;
 	public Image snakePic;
     public Image foodPic;
+    public Image orangePic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -54,6 +55,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 
     public Food Apple;
     public Food Apple2;
+    public WinningFood Orange;
+    public boolean startgame;
 
 
    // Main method definition
@@ -76,9 +79,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
       //create (construct) the objects needed for the game and load up 
 		snakePic = Toolkit.getDefaultToolkit().getImage("snekBody.png");//load the picture
         foodPic= Toolkit.getDefaultToolkit().getImage("Red_Square.png");
-            Apple=new Food(700,500);
-            Apple2=new Food(200,600);
-            head = new Snake(500, 100);
+        orangePic=Toolkit.getDefaultToolkit().getImage("orange.png");
+        Orange=new WinningFood(50,50);
+            Apple=new Food(150,150);
+            Apple2=new Food(100,100);
+            head = new Snake(10, 10);
             rope=new SnakeBody(480,100);
             rope2=new SnakeBody(480,100);
 
@@ -96,33 +101,47 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {//
 	public void run() {
 
       //for the moment we will loop things forever.
-		while (true) {
 
-         moveThings();  //move all the game objects
-            crashing();
-         render();  // paint the graphics
-         pause(20);// sleep for 10 ms
-		}
+            while (true) {
+
+                    moveFood();//this moves the food
+                    moveThings();  //move all the game objects
+                    crashing();//deals with things colliding
+                    render();  // paint the graphics
+                    pause(20);
+                // sleep for 10 ms
+            }
+
 	}
     public void crashing(){
-if(head.hitbox.intersects(Apple.hitbox)){
+if(head.hitbox.intersects(Apple.hitbox)){//apple dissapears when eaten
     Apple.isEaten=true;
 }
-        if(head.hitbox.intersects(Apple2.hitbox)){
+        if(head.hitbox.intersects(Apple2.hitbox)&&Apple.isEaten==true){//makes the second apple eaten only if first apple is eaten
             Apple2.isEaten=true;
+        }//prevents accidental eating of 2nd apple if its not visible
+        if(head.hitbox.intersects(Orange.hitbox)&& Apple2.isEaten==true){//makes oranges eaten if apples are eaten
+            Orange.isEaten=true;
         }
     }
 
-
+public void moveFood(){
+        if(startgame==true) {
+            Apple.move();
+            Apple2.move();
+            Orange.move();
+        }
+}
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		head.move();
-        //rope.move();
-        pause(50);
-       betterMove();
-       pause(50);
-       betterMove2();
+        if(startgame==true) {
+            head.move();
+            pause(50);
+            betterMove();
+            pause(50);
+            betterMove2();
+        }
 
 	}
 
@@ -253,21 +272,31 @@ if(head.hitbox.intersects(Apple.hitbox)){
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-        g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
-		g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
-        if(Apple.isEaten==true) {
-            g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
+        if(startgame==true) {
+            g.drawRect(head.hitbox.x, head.hitbox.y, head.width, head.height);
+            g.drawImage(snakePic, head.xpos, head.ypos, head.width, head.height, null);
+            if (Apple.isEaten == true) {
+                g.drawImage(snakePic, rope.xpos, rope.ypos, rope.width, rope.height, null);
+            }
+            if (Apple.isEaten == false) {//make reappear when eaten
+                g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
+                g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
+            }
+            if (Apple.isEaten == true && Apple2.isEaten == false) {
+                g.drawImage(foodPic, Apple2.xpos, Apple2.ypos, Apple2.width, Apple2.height, null);
+                g.drawRect(Apple2.hitbox.x, Apple2.hitbox.y, Apple2.width, Apple2.height);
+            }
+
+            if (Apple2.isEaten == true && Orange.isEaten == false) {
+                g.drawImage(orangePic, Orange.xpos, Orange.ypos, Orange.width, Orange.height, null);
+            }
+            if (Apple2.isEaten == true) {
+                g.drawImage(snakePic, rope2.xpos, rope2.ypos, rope2.width, rope2.height, null);
+            }
         }
-        if (Apple.isEaten == false) {//make reappear when eaten
-            g.drawImage(foodPic, Apple.xpos, Apple.ypos, Apple.width, Apple.height, null);
-            g.drawRect(Apple.hitbox.x, Apple.hitbox.y, Apple.width, Apple.height);
-        }
-        if(Apple.isEaten==true&&Apple2.isEaten==false){
-            g.drawImage(foodPic, Apple2.xpos, Apple2.ypos, Apple2.width, Apple2.height, null);
-            g.drawRect(Apple2.hitbox.x, Apple2.hitbox.y, Apple2.width, Apple2.height);
-        }
-        if(Apple2.isEaten==true){
-            g.drawImage(snakePic,rope2.xpos,rope2.ypos,rope2.width,rope2.height,null);
+        if(startgame==false) {
+            g.setColor(Color.GREEN);
+            g.fillRect(100, 100, 10, 10);
         }
 
 
@@ -331,6 +360,13 @@ if(head.hitbox.intersects(Apple.hitbox)){
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println(e.getPoint());
+            Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1, 1);
+            Rectangle startHitbox = new Rectangle(100, 100, 100, 100);
+
+            if (startHitbox.intersects(pointHitbox)) {
+                startgame = true;
+            }
 
     }
 
