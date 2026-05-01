@@ -34,7 +34,7 @@ public class Food {
         xpos = xpos + dx;
         ypos = ypos + dy;
         hitbox= new Rectangle(xpos,ypos,width,height);
-        if(xpos>179){
+        if(xpos>179){//all this makes the bouncing off walls effect
             dx=-dx;
         }
         if(xpos<-0){

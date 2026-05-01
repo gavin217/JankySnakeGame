@@ -34,7 +34,7 @@ public class WinningFood {
         xpos = xpos + dx;
         ypos = ypos + dy;
         hitbox= new Rectangle(xpos,ypos,width,height);
-        if(xpos>221){
+        if(xpos>221){//all this creates the wrapping effect
             xpos=-20;
         }
         if(xpos<-20){

@@ -43,26 +43,26 @@ public class Snake {
     } // constructor
 
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
-    public void move() {
-        if(isNorth==true){
+    public void move() {//the isnorth and the like correspond to the arrow key pressed
+        if(isNorth==true){//up pressed
             dy=-20;
         }
-        if(isSouth==true){
+        if(isSouth==true){//down pressed
             dy=20;
         }
-        if(isSouth==false&&isNorth==false){
+        if(isSouth==false&&isNorth==false){//stops up movement if left or right pressed
             dy=0;
         }
-        if(isEast==true){
+        if(isEast==true){//right pressed
             dx=20;
         }
-        if(isWest==true) {
+        if(isWest==true) {//left pressed
             dx=-20;
         }
-        if(isWest==false&&isEast==false){
+        if(isWest==false&&isEast==false){//up or down pressed
             dx=0;
         }
-        if(xpos>179){
+        if(xpos>181){//failsafe for hitting the wall so one cant move even if they hit the wall
             dx=0;
             dy=0;
         }
@@ -70,7 +70,7 @@ public class Snake {
             dx=0;
             dy=0;
         }
-        if(ypos>179){
+        if(ypos>181){
             dy=0;
             dx=0;
         }
