@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 // Class Definition Section
 
 public class BasicGameApp implements Runnable, KeyListener, MouseListener {//ignore project name
-//couldnt change project name bc it broke when i tried
+//couldnt change project name bc it broke when i tried so i just left it
    //Variable Definition Section
    //Declare the variables used in the program 
    //You can set their initial values too
